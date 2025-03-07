@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <property name="connection.url">jdbc:postgresql://localhost:5432/hospital</property>
+        <property name="connection.driver_class">org.postgresql.Driver</property>
+        <property name="connection.username">postgres</property>
+        <property name="connection.password">0000</property>
+        <property name ="hibernate.show_sql">true</property>
+
+        <mapping class="main.connection.Doctor"/>
+        <mapping class="main.connection.Patient"/>
+        <mapping class="main.connection.Specialty"/>
+        <mapping class="main.connection.Appointment"/>
+        <mapping class="main.connection.Visit"/>
+        <mapping class="main.connection.Prescription"/>
+        <mapping class="main.connection.Diagnosis"/>
+        <mapping class="main.connection.Test"/>
+        <mapping class="main.connection.BloodCountTest"/>
+        <mapping class="main.connection.AntibodyTest"/>
+        <mapping class="main.connection.BloodCultureTest"/>
+        <mapping class="main.connection.OtherTest"/>
+        <mapping class="main.connection.State"/>
+    </session-factory>
+</hibernate-configuration>
+ 

@@ -1,0 +1,15 @@
+package main.ui;
+
+enum Screens {
+    LOGIN,
+    SIGNUP,
+    OPTIONS,
+    APPOINTMENTS,
+    NEW_APPOINTMENT,
+    EDIT_APPOINTMENTS,
+    APPOINTMENT_HISTORY,
+    PRESCRIPTIONS,
+    TESTS,
+    MESSAGES,
+    ACCOUNT
+}
