@@ -2,6 +2,7 @@ package main.ui;
 
 import com.formdev.flatlaf.FlatClientProperties;
 import main.connection.Patient;
+import main.reports.PatientReport;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
@@ -77,6 +78,7 @@ public class AccountScreen extends ScreenWithParent {
         JButton confirmEditButton;
         JLabel messageLabel;
 
+        JButton pdfButton;
         AccountPanel() {
             super();
             setUpPanel();
@@ -162,6 +164,23 @@ public class AccountScreen extends ScreenWithParent {
             confirmEditButton = new JButton("Cambiar datos");
             confirmEditButton.addActionListener(_ -> attemptChange());
             createMessageLabel();
+
+            pdfButton = new JButton("Imprimir datos");
+            CommonMethods.setDimension(pdfButton, 500, 50);
+            pdfButton.addActionListener(_ -> {
+                PatientReport patientReport = new PatientReport(patient);
+                if (!patientReport.createDocument()) {
+                    showErrorMessage("Error al crear el archivo");
+                    try {
+                        Thread.sleep(2000);
+                    } catch (InterruptedException _) {
+                    } finally {
+                        hideMessageLabel();
+                    }
+                } else {
+                    showSuccessMessage("El archivo se ha guardado correctamente");
+                }
+            });
         }
         private void addElementsToPanel() {
             contentPanel.add(logoLabel,"span");
@@ -233,12 +252,14 @@ public class AccountScreen extends ScreenWithParent {
             contentPanel.add(messageLabel, "span");
 
             contentPanel.add(new JSeparator(), "gapy 15 15, span");
+
+            contentPanel.add(pdfButton, "span, gapBottom 15, center");
         }
         private void createMessageLabel() {
             messageLabel = new JLabel("Message");
             messageLabel.putClientProperty(FlatClientProperties.STYLE, "arc:6");
             messageLabel.setOpaque(true);
-            messageLabel.setVisible(false);
+            hideMessageLabel();
             Dimension dim = new Dimension(contentPanel.getPreferredSize().width - 100, 40);
             messageLabel.setMinimumSize(dim);
             messageLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -265,6 +286,7 @@ public class AccountScreen extends ScreenWithParent {
             );
         }
         private void attemptChange() {
+            hideMessageLabel();
             JTextComponent[] fieldsToValidate = {
                     mailField,
                     telephoneField,
@@ -317,6 +339,9 @@ public class AccountScreen extends ScreenWithParent {
                 getParentFrame().getDbConnection().editPatient(getParentFrame().getPatient(), newPatient);
                 showSuccessMessage("Datos actualizados correctamente");
             }
+        }
+        private void hideMessageLabel() {
+            messageLabel.setVisible(false);
         }
         private void showErrorMessage(String message) {
             messageLabel.putClientProperty(FlatClientProperties.STYLE, "background:#FF96A8FF; foreground:#B51D37FF");

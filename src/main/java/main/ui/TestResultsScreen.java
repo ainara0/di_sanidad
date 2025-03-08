@@ -2,6 +2,8 @@ package main.ui;
 
 import com.formdev.flatlaf.FlatClientProperties;
 import main.connection.*;
+import main.reports.PatientReport;
+import main.reports.TestsReport;
 import net.miginfocom.swing.MigLayout;
 import raven.datetime.DatePicker;
 
@@ -121,8 +123,8 @@ public class TestResultsScreen extends ScreenWithParent {
             pdfButton = new JButton("PDF");
             CommonMethods.setDimension(openFiltersButton,300, 60);
             pdfButton.addActionListener(_ -> {
-                //TODO: print pdf
-                System.out.println("Clock");
+                TestsReport testsReport = new TestsReport(getParentFrame().getPatient());
+                testsReport.createDocument();
             });
         }
         private void createFilterElements() {

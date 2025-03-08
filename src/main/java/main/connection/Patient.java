@@ -77,4 +77,8 @@ public class Patient extends Person {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public String getFullAddress() {
+        return city + ", " + postalCode + ", " + street + ", " + number;
+    }
 }
